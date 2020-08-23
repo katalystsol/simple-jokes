@@ -1,24 +1,24 @@
 # Simple Jokes - TODO
 
 ## Database
-- determine data structure
-- figure out migrations
-- create migrations
 - create seeders for initial list of jokes
 
-## Data
-- get list of jokes
-
 ## Model
-- create joke model
+- create joke entity / model
+- create JokeRepository
 
 ## Controller
 - implement controller
     - index
+        - add pagination...
     - show
-    - create (??)
     - store
     - delete
+    - random
+- joke validation
+    - joke min-length? / max-length
+    - id: integer / valid id for delete
+    - id: integer / valid id for edit
 
 ## Testing
 - set up PHPUnit
@@ -29,6 +29,7 @@
     - implement / create documentation
 - create doc / README on how to run the application
 
+- Postman API collection (commit to github?)
 
 ## Bonus items
 - filter jokes
