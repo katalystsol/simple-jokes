@@ -1,11 +1,7 @@
 # Simple Jokes - TODO
 
-## Database
-- create seeders for initial list of jokes
-
-## Model
-- create joke entity / model
-- create JokeRepository
+## Next...
+- set up PHPUnit & create initial tests
 
 ## Controller
 - implement controller
