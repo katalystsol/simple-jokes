@@ -19,6 +19,17 @@ class JokeRepository extends ServiceEntityRepository
         parent::__construct($registry, Joke::class);
     }
 
+    public function getAll(): array
+    {
+        $builder = $this->createQueryBuilder('u');
+
+        return $builder->getQuery()->getArrayResult();
+    }
+
+    public function getRandomJoke()
+    {
+
+    }
     // /**
     //  * @return Joke[] Returns an array of Joke objects
     //  */
