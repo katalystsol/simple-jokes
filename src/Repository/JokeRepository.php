@@ -19,6 +19,10 @@ class JokeRepository extends ServiceEntityRepository
         parent::__construct($registry, Joke::class);
     }
 
+    /**
+     * Returns an array of jokes in array format.
+     * @return array
+     */
     public function getAll(): array
     {
         $builder = $this->createQueryBuilder('u');
@@ -26,26 +30,41 @@ class JokeRepository extends ServiceEntityRepository
         return $builder->getQuery()->getArrayResult();
     }
 
+    /**
+     * Returns specific joke in array format.
+     *
+     * @param int $id
+     *
+     * @return array
+     */
+    public function getById(int $id): array
+    {
+        return $this->createQueryBuilder('j')
+            ->andWhere('j.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getArrayResult();
+    }
+
     public function getRandomJoke()
     {
 
     }
-    // /**
-    //  * @return Joke[] Returns an array of Joke objects
-    //  */
-    /*
-    public function findByExampleField($value)
+
+    /**
+     * @param string $value
+     * @return array Returns an array of Jokes in array format
+     */
+    public function findByJokeText($value): array
     {
         return $this->createQueryBuilder('j')
-            ->andWhere('j.exampleField = :val')
+            ->andWhere('j.joke LIKE :val')
             ->setParameter('val', $value)
             ->orderBy('j.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getArrayResult();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Joke
