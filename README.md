@@ -9,5 +9,6 @@
 
 ## Usage
 
+### Seeding the joke database (pre-population)
 
 ## Tests
