@@ -10,5 +10,6 @@
 ## Usage
 
 ### Seeding the joke database (pre-population)
+- from the command console run: `php bin/console doctrine:fixtures:load`
 
 ## Tests
