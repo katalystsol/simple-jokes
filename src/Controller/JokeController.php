@@ -57,7 +57,7 @@ class JokeController extends AbstractController
     {
         $joke = $this->getDoctrine()
             ->getRepository(Joke::class)
-            ->find($id);
+            ->getById($id);
 
         if (!$joke) {
             throw $this->createNotFoundException(
