@@ -1,12 +1,5 @@
 # Simple Jokes - TODO
 
-## Routing
-- figure out routing
-    - add necessary routes
-
-## Model
-- create joke model
-
 ## Database
 - determine data structure
 - figure out migrations
@@ -16,8 +9,16 @@
 ## Data
 - get list of jokes
 
+## Model
+- create joke model
+
 ## Controller
-- create controller
+- implement controller
+    - index
+    - show
+    - create (??)
+    - store
+    - delete
 
 ## Testing
 - set up PHPUnit
