@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\JokeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=JokeRepository::class)
@@ -19,16 +20,25 @@ class Joke
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     min = 10,
+     *     minMessage = "Your joke must be at least {{ limit }} characters long"
+     * )
      */
     private $joke;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\Type("\DateTimeInterface")
+     * @Assert\NotBlank
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\Type("\DateTimeInterface")
+     * @Assert\NotBlank
      */
     private $updated_at;
 
