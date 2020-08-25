@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Joke;
 use App\Repository\JokeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,23 +16,35 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class JokeController extends AbstractController
 {
     /**
-     * List the joke resources.
+     * List the joke resources with pagination.
+     *
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      *
      * @return JsonResponse
      * @Route("/api/jokes", name="jokes_list", methods={"GET","HEAD"})
-     * @TODO add pagination with
-     *  - number jokes per page
-     *  - total count
-     *  - page number
      */
-    public function index(): JsonResponse
+    public function index(PaginatorInterface $paginator, Request $request): JsonResponse
     {
-        $jokes = $this->getDoctrine()
-            ->getRepository(Joke::class)
-            ->getAll();
+        $limit = $request->query->getInt('limit', 10);
+        $page = $request->query->getInt('page', 1);
 
-        // TODO should I check for none and send message?
-        return new JsonResponse($jokes, JsonResponse::HTTP_OK);
+        $pagination = $paginator->paginate(
+            $this->getDoctrine()->getRepository(Joke::class)->getAll(),
+            $page,
+            $limit
+        );
+
+        $results = [
+            'count' => $pagination->getTotalItemCount(),
+            'page' => $pagination->getCurrentPageNumber(),
+            'limit' => $pagination->getItemNumberPerPage(),
+            '_embedded' => [
+                'jokes' => $pagination->getItems(),
+            ],
+        ];
+
+        return new JsonResponse($results, JsonResponse::HTTP_OK);
     }
 
     /**
