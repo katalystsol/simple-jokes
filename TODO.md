@@ -1,20 +1,14 @@
 # Simple Jokes - TODO
 
 ## Next...
-- implement validation
+- implement delete()
 
 ## Controller
 - implement controller
     - index
         - add pagination...
-    - show
-    - store
     - delete
     - random
-- joke validation
-    - joke min-length? / max-length
-    - id: integer / valid id for delete
-    - id: integer / valid id for edit
 
 ## Testing
 - create tests
