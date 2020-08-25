@@ -1,0 +1,192 @@
+openapi: 3.0.0
+info:
+  title: Simple Jokes API
+  description: This is a simple API for that allows users to anonymously create and
+    read jokes
+  contact:
+    email: dcranford@katalystsolutions.com
+  license:
+    name: MIT
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/KatalystSolutions/SimpleJoke/1.0.0
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: developers
+  description: Operations available to regular developers
+paths:
+  /api/jokes:
+    get:
+      tags:
+      - developers
+      summary: retrieves list of jokes
+      description: |
+        Return a list of jokes in paginated format
+      operationId: getJokesIndex
+      parameters:
+      - name: page
+        in: query
+        description: pass optional page number to determine where list starts
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: maximum number of records to return
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 50
+          minimum: 1
+          type: integer
+      responses:
+        "200":
+          description: results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JokeItems'
+        "422":
+          description: bad input parameter
+    post:
+      tags:
+      - developers
+      summary: add a joke
+      operationId: createJoke
+      parameters:
+      - name: joke
+        in: query
+        description: the joke string
+        required: true
+        style: form
+        explode: true
+        schema:
+          minimum: 10
+          type: string
+      responses:
+        "201":
+          description: joke record
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JokeItem'
+        "422":
+          description: unprocessable entity
+  /api/jokes/random:
+    get:
+      tags:
+      - developers
+      summary: get a random joke
+      operationId: getRandomJoke
+      responses:
+        "200":
+          description: random joke record
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JokeItem'
+        "404":
+          description: joke not found
+  /api/jokes/{id}:
+    get:
+      tags:
+      - developers
+      summary: get specific joke
+      operationId: getJokeById
+      parameters:
+      - name: id
+        in: path
+        description: id of the joke record
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        "200":
+          description: joke record
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JokeItem'
+        "404":
+          description: joke not found
+    delete:
+      tags:
+      - developers
+      summary: delete a joke by id
+      operationId: deleteJoke
+      parameters:
+      - name: id
+        in: path
+        description: id of the joke record
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        "200":
+          description: joke record to delete
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: boolean
+                  description: success
+        "404":
+          description: joke not found
+components:
+  schemas:
+    JokeItems:
+      type: array
+      items:
+        $ref: '#/components/schemas/JokeItems_inner'
+    JokeItem:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        joke:
+          type: string
+          example: To understand recursion you must first understand recursion.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    JokeItems_inner:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: number of total records
+        page:
+          type: integer
+          description: page number where results start
+        limit:
+          type: integer
+          description: number of records per page
+        _embedded:
+          type: array
+          items:
+            $ref: '#/components/schemas/JokeItem'
