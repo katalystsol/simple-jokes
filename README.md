@@ -22,7 +22,8 @@ From the command line:
 
 ## API Documents
 - Swagger / OpenAPI doc:
-    - [Swagger HTML doc](docs/openapi/html2-documentation-generated/index.html)
+    - [Swagger HTML on Swagger Server](<a href="https://app.swaggerhub.com/apis-docs/KatalystSolutions/SimpleJoke/1.0.0">)
+    - [Swagger HTML local copy](<a href="/docs/openapi/html2-documentation-generated/index.html">)
     - [OpenAPI Spec YAML](docs/openapi/openapi-yaml-client-generated/openapi.yaml)
 - [Postman Collection](docs/postman/Simple-Jokes.postman_collection.json)
 
