@@ -31,7 +31,7 @@ class JokeController extends AbstractController
             ->getAll();
 
         // TODO should I check for none and send message?
-        return new JsonResponse($jokes, 200);
+        return new JsonResponse($jokes, JsonResponse::HTTP_OK);
     }
 
     /**
@@ -59,9 +59,10 @@ class JokeController extends AbstractController
 
         if (count($errors)) {
             $errorString = (string) $errors;
-            return new JsonResponse(['errors' => $errorString], 422);
+            return new JsonResponse(['errors' => $errorString], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         }
 
+        $entityManager->persist($joke);
         $entityManager->flush();
 
         $responseData = [
@@ -69,7 +70,7 @@ class JokeController extends AbstractController
             'data' => $serializer->serialize($joke, 'json'),
         ];
 
-        return new JsonResponse($responseData, 201);
+        return new JsonResponse($responseData, JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -82,9 +83,7 @@ class JokeController extends AbstractController
      */
     public function show(int $id): JsonResponse
     {
-        $joke = $this->getDoctrine()
-            ->getRepository(Joke::class)
-            ->getById($id);
+        $joke = $this->getJokeArrayById($id);
 
         if (!$joke) {
             throw $this->createNotFoundException(
@@ -92,7 +91,7 @@ class JokeController extends AbstractController
             );
         }
 
-        return new JsonResponse($joke, 200);
+        return new JsonResponse($joke, JsonResponse::HTTP_OK);
     }
 
     /**
@@ -105,7 +104,22 @@ class JokeController extends AbstractController
      */
     public function destroy(int $id): JsonResponse
     {
-        // TODO implement
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $joke = $this->getDoctrine()
+            ->getRepository(Joke::class)
+            ->find($id);
+
+        if (!$joke) {
+            throw $this->createNotFoundException(
+                'No joke found for id '.$id
+            );
+        }
+
+        $entityManager->remove($joke);
+        $entityManager->flush();
+
+        return new JsonResponse(['success' => true], JsonResponse::HTTP_OK);
     }
 
     /**
@@ -119,5 +133,12 @@ class JokeController extends AbstractController
         // TODO implement
         // get count of jokes (or get list of id's)
         // randomly select one and return it
+    }
+
+    protected function getJokeArrayById(int $id): ?array
+    {
+        return $this->getDoctrine()
+            ->getRepository(Joke::class)
+            ->getById($id);
     }
 }
