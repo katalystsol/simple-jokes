@@ -1,0 +1,207 @@
+{
+	"info": {
+		"_postman_id": "b7c575de-e8d3-446d-929b-a513e57d246e",
+		"name": "Simple-Jokes",
+		"description": "Access the simple-jokes joke api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Jokes List",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{HOST}}/api/jokes",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"jokes"
+					]
+				},
+				"description": "list of all jokes in the database"
+			},
+			"response": []
+		},
+		{
+			"name": "Jokes List - paginate",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{HOST}}/api/jokes?page=1&limit=5",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"jokes"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				},
+				"description": "list of all jokes in the database"
+			},
+			"response": []
+		},
+		{
+			"name": "Joke show",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{HOST}}/api/jokes/10",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"jokes",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Joke random",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{HOST}}/api/jokes/random",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"jokes",
+						"random"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Joke add",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{HOST}}/api/jokes?joke=Knock, Knock",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"jokes"
+					],
+					"query": [
+						{
+							"key": "joke",
+							"value": "Knock, Knock"
+						}
+					]
+				},
+				"description": "create a joke record in the database"
+			},
+			"response": []
+		},
+		{
+			"name": "Joke delete",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{HOST}}/api/jokes/98",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"jokes",
+						"98"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
