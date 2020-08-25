@@ -1,7 +1,7 @@
 # Simple Jokes - TODO
 
 ## Next...
-- set up PHPUnit & create initial tests
+- implement validation
 
 ## Controller
 - implement controller
@@ -17,8 +17,9 @@
     - id: integer / valid id for edit
 
 ## Testing
-- set up PHPUnit
 - create tests
+    - JokeRepository
+    - api
 
 ## Documentation
 - figure out Swagger documentation
