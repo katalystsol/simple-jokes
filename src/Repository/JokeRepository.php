@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Joke;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\DBALException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -40,15 +41,33 @@ class JokeRepository extends ServiceEntityRepository
     public function getById(int $id): array
     {
         return $this->createQueryBuilder('j')
-            ->andWhere('j.id = :id')
+            ->where('j.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
             ->getArrayResult();
     }
 
-    public function getRandomJoke()
+    /**
+     * Return a random joke in array format.
+     *
+     * @param int $num
+     *
+     * @return array|null
+     * @throws DBALException
+     */
+    public function getRandomJoke(int $num = 1): ?array
     {
+        if ($num < 1) {
+            return null;
+        }
 
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT * FROM joke WHERE id IN (SELECT id FROM joke ORDER BY RANDOM() LIMIT ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(1, $num);
+        $stmt->execute();
+
+        return (1 === $num) ? $stmt->fetch() : $stmt->fetchAll();
     }
 
     /**
@@ -58,7 +77,7 @@ class JokeRepository extends ServiceEntityRepository
     public function findByJokeText($value): array
     {
         return $this->createQueryBuilder('j')
-            ->andWhere('j.joke LIKE :val')
+            ->where('j.joke LIKE :val')
             ->setParameter('val', $value)
             ->orderBy('j.id', 'ASC')
             ->setMaxResults(10)
