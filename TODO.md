@@ -1,33 +1,15 @@
 # Simple Jokes - TODO
 
 ## Next...
-- implement delete()
-
-## Controller
-- implement controller
-    - index
-        - add pagination...
-    - delete
-    - random
+- testing
 
 ## Testing
 - create tests
     - JokeRepository
     - api
 
-## Documentation
-- figure out Swagger documentation
-    - implement / create documentation
-- create doc / README on how to run the application
-
-- Postman API collection (commit to github?)
-
-## Bonus items
-- filter jokes
-- edit jokes
-- dockerize
-
-## Finalize
-- push to Github
-- delete TODO list
- 
+## Further extension
+- look at implementing collections via league/fractal
+- implement HAL output for API
+- add ability to filter/search jokes
+- add ability to edit jokes
