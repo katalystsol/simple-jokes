@@ -74,6 +74,21 @@ class JokeController extends AbstractController
     }
 
     /**
+     * Return a random joke.
+     *
+     * @return JsonResponse
+     * @Route("/api/jokes/random", name="joke_random", methods={"GET"})
+     */
+    public function random(): JsonResponse
+    {
+        $joke = $this->getDoctrine()
+            ->getRepository(Joke::class)
+            ->getRandomJoke();
+
+        return new JsonResponse($joke, JsonResponse::HTTP_OK);
+    }
+
+    /**
      * Find and return the joke resource.
      *
      * @param int $id
@@ -120,19 +135,6 @@ class JokeController extends AbstractController
         $entityManager->flush();
 
         return new JsonResponse(['success' => true], JsonResponse::HTTP_OK);
-    }
-
-    /**
-     * Return a random joke.
-     *
-     * @return JsonResponse
-     * @Route("/api/jokes/random", name="joke_random", methods={"GET"})
-     */
-    public function random(): JsonResponse
-    {
-        // TODO implement
-        // get count of jokes (or get list of id's)
-        // randomly select one and return it
     }
 
     protected function getJokeArrayById(int $id): ?array
