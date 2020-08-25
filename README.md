@@ -17,3 +17,10 @@
     - This will make the API available via http://127.0.0.1:8000 (e.g. go to http://127.0.0.1:8000/api/jokes in browser or Postman)
 
 ## Tests
+Run migration and load fixtures
+
+- `php bin/console doctrine:migrations:migrate --env=test`
+- `php bin/console doctrine:fixtures:load --env=test`
+
+Run PHPUnit
+- `php bin/phpunit`
